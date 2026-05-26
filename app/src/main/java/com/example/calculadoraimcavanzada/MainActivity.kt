@@ -1,16 +1,16 @@
 package com.example.calculadoraimcavanzada
 
-// Importamos Bundle para iniciar la actividad principal
+// Importamos Bundle para iniciar la actividad principal de Android
 import android.os.Bundle
 
 // Importamos ComponentActivity y setContent para usar Jetpack Compose
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
-// Importamos Image para mostrar el logo
+// Importamos Image para mostrar el logo de la universidad
 import androidx.compose.foundation.Image
 
-// Importamos Box, Column, Spacer y otras herramientas de layout
+// Importamos herramientas para fondo y diseño
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,35 +22,35 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 
-// Importamos RoundedCornerShape para esquinas redondeadas
+// Importamos forma redondeada para tarjetas y botones
 import androidx.compose.foundation.shape.RoundedCornerShape
 
-// Importamos Button, Card y Text para la interfaz
+// Importamos componentes visuales de Material Design 3
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 
-// Importamos Composable
+// Importamos Composable para crear pantallas con Jetpack Compose
 import androidx.compose.runtime.Composable
 
 // Importamos alineación y modificadores
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
-// Importamos Brush y Color para el degradado y colores
+// Importamos Brush y Color para crear el degradado
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-// Importamos painterResource para cargar la imagen desde drawable
+// Importamos painterResource para cargar imágenes desde drawable
 import androidx.compose.ui.res.painterResource
 
 // Importamos estilos de texto
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 
-// Importamos tamaños y medidas
+// Importamos unidades de tamaño
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -59,8 +59,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // setContent permite mostrar la interfaz creada con Jetpack Compose
         setContent {
-            PantallaCaratulaElegante()
+            // Temporalmente mostramos el formulario para probar el Commit 3
+            // Luego volveremos a usar navegación para ir desde la carátula al formulario
+            PantallaFormulario()
         }
     }
 }
@@ -69,12 +72,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun PantallaCaratulaElegante() {
 
-    // Box nos permite poner un fondo y luego colocar contenido encima
+    // Box permite colocar un fondo y luego contenido encima
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                // Fondo degradado con colores inspirados en el logo
+                // Fondo degradado inspirado en los colores del logo
                 brush = Brush.verticalGradient(
                     colors = listOf(
                         Color(0xFFF5A623), // Naranja
@@ -87,7 +90,7 @@ fun PantallaCaratulaElegante() {
         contentAlignment = Alignment.Center
     ) {
 
-        // Tarjeta principal para dar un look más limpio y elegante
+        // Card crea una tarjeta elegante sobre el fondo degradado
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(24.dp),
@@ -97,7 +100,7 @@ fun PantallaCaratulaElegante() {
             elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
         ) {
 
-            // Columna que organiza todo verticalmente
+            // Column organiza los elementos de la carátula de forma vertical
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -106,7 +109,7 @@ fun PantallaCaratulaElegante() {
                 verticalArrangement = Arrangement.Center
             ) {
 
-                // Logo de la universidad
+                // Imagen del logo guardada en res/drawable/logo_ur.png
                 Image(
                     painter = painterResource(id = R.drawable.logo_ur),
                     contentDescription = "Logo Universitario Rumiñahui",
@@ -115,7 +118,7 @@ fun PantallaCaratulaElegante() {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                // Nombre de la universidad
+                // Nombre de la institución
                 Text(
                     text = "Universitario Rumiñahui",
                     fontSize = 28.sp,
@@ -126,7 +129,7 @@ fun PantallaCaratulaElegante() {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Texto de estudiante
+                // Datos de la estudiante
                 Text(
                     text = "Estudiante:",
                     fontSize = 18.sp,
@@ -143,7 +146,7 @@ fun PantallaCaratulaElegante() {
 
                 Spacer(modifier = Modifier.height(14.dp))
 
-                // Texto de materia
+                // Datos de la materia
                 Text(
                     text = "Materia:",
                     fontSize = 18.sp,
@@ -171,10 +174,10 @@ fun PantallaCaratulaElegante() {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                // Botón de inicio
+                // Botón de inicio, por ahora sin navegación
                 Button(
                     onClick = {
-                        // Más adelante este botón nos llevará a la siguiente pantalla
+                        // Más adelante este botón llevará a la pantalla del formulario
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(14.dp),
@@ -185,6 +188,108 @@ fun PantallaCaratulaElegante() {
                 ) {
                     Text(
                         text = "Iniciar",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+    }
+}
+
+// Esta pantalla será el formulario donde el usuario ingresará sus datos
+// Esta pantalla será el formulario donde el usuario ingresará sus datos
+@Composable
+fun PantallaFormulario() {
+
+    // Box permite colocar un fondo degradado y encima una tarjeta
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFFF5A623), // Naranja
+                        Color(0xFF62D2C6), // Verde agua
+                        Color(0xFF0D47A1)  // Azul fuerte
+                    )
+                )
+            )
+            .padding(24.dp),
+        contentAlignment = Alignment.Center
+    ) {
+
+        // Card crea una tarjeta blanca elegante sobre el fondo
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White.copy(alpha = 0.92f)
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
+        ) {
+
+            // Column organiza los elementos de forma vertical
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(28.dp),
+
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                // Título de la pantalla del formulario
+                Text(
+                    text = "Calculadora de IMC",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    color = Color(0xFF0D47A1)
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Por ahora usamos textos simples.
+                // En el siguiente commit los cambiaremos por campos de texto reales.
+                Text(
+                    text = "Nombre del usuario",
+                    fontSize = 18.sp,
+                    color = Color(0xFF333333)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = "Peso en kilogramos",
+                    fontSize = 18.sp,
+                    color = Color(0xFF333333)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = "Altura en metros",
+                    fontSize = 18.sp,
+                    color = Color(0xFF333333)
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Botón para calcular, todavía sin lógica
+                Button(
+                    onClick = {
+                        // Más adelante aquí se calculará el IMC
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(14.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF0D47A1),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(
+                        text = "Calcular",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
