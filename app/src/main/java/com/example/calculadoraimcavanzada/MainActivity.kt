@@ -423,6 +423,14 @@ fun PantallaResultado(
         else -> "Obesidad"
     }
 
+    // color de la categoría según el resultado del IMC
+    val colorCategoria = when (categoria) {
+        "Peso normal" -> Color(0xFF2E7D32) // Verde
+        "Bajo peso" -> Color.Red           // Rojo
+        "Sobrepeso" -> Color(0xFFFF9800)   // Naranja
+        else -> Color.Red                  // Rojo para obesidad
+    }
+
     // Usamos el mismo fondo degradado de la carátula y formulario
     Box(
         modifier = Modifier
@@ -458,14 +466,6 @@ fun PantallaResultado(
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Text(
-                    text = "Resultado del IMC",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF0D47A1),
-                    textAlign = TextAlign.Center
-                )
-
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
@@ -491,7 +491,7 @@ fun PantallaResultado(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    color = Color(0xFF333333)
+                    color = colorCategoria
                 )
 
                 Spacer(modifier = Modifier.height(28.dp))
