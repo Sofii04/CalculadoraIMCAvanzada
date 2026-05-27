@@ -54,6 +54,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
 // Activity principal de la app
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -199,10 +205,23 @@ fun PantallaCaratulaElegante() {
 
 // Esta pantalla será el formulario donde el usuario ingresará sus datos
 // Esta pantalla será el formulario donde el usuario ingresará sus datos
+// Esta pantalla será el formulario donde el usuario ingresará sus datos
 @Composable
 fun PantallaFormulario() {
 
-    // Box permite colocar un fondo degradado y encima una tarjeta
+    // Estado para guardar el nombre que escribe el usuario
+    var nombre by remember { mutableStateOf("") }
+
+    // Estado para guardar el peso que escribe el usuario
+    var peso by remember { mutableStateOf("") }
+
+    // Estado para guardar la altura que escribe el usuario
+    var altura by remember { mutableStateOf("") }
+
+    // Estado para mostrar mensajes de error
+    var mensajeError by remember { mutableStateOf("") }
+
+    // Box permite colocar el fondo degradado y encima la tarjeta
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -219,7 +238,7 @@ fun PantallaFormulario() {
         contentAlignment = Alignment.Center
     ) {
 
-        // Card crea una tarjeta blanca elegante sobre el fondo
+        // Tarjeta blanca elegante para contener el formulario
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(24.dp),
@@ -229,17 +248,14 @@ fun PantallaFormulario() {
             elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
         ) {
 
-            // Column organiza los elementos de forma vertical
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(28.dp),
-
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
 
-                // Título de la pantalla del formulario
                 Text(
                     text = "Calculadora de IMC",
                     fontSize = 28.sp,
@@ -250,36 +266,76 @@ fun PantallaFormulario() {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                // Por ahora usamos textos simples.
-                // En el siguiente commit los cambiaremos por campos de texto reales.
-                Text(
-                    text = "Nombre del usuario",
-                    fontSize = 18.sp,
-                    color = Color(0xFF333333)
+                // Campo para ingresar el nombre del usuario
+                OutlinedTextField(
+                    value = nombre,
+                    onValueChange = { nombre = it },
+                    label = { Text("Nombre del usuario") },
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                Text(
-                    text = "Peso en kilogramos",
-                    fontSize = 18.sp,
-                    color = Color(0xFF333333)
+                // Campo para ingresar el peso en kilogramos
+                OutlinedTextField(
+                    value = peso,
+                    onValueChange = { peso = it },
+                    label = { Text("Peso en kilogramos") },
+                    placeholder = { Text("Ejemplo: 60") },
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                Text(
-                    text = "Altura en metros",
-                    fontSize = 18.sp,
-                    color = Color(0xFF333333)
+                // Campo para ingresar la altura en metros
+                OutlinedTextField(
+                    value = altura,
+                    onValueChange = { altura = it },
+                    label = { Text("Altura en metros") },
+                    placeholder = { Text("Ejemplo: 1.60") },
+                    modifier = Modifier.fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-                // Botón para calcular, todavía sin lógica
+                // Si existe un error, se muestra en rojo
+                if (mensajeError.isNotEmpty()) {
+                    Text(
+                        text = mensajeError,
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+
                 Button(
                     onClick = {
-                        // Más adelante aquí se calculará el IMC
+                        // Convertimos peso y altura a números decimales
+                        val pesoNumero = peso.toDoubleOrNull()
+                        val alturaNumero = altura.toDoubleOrNull()
+
+                        // Validamos que los campos no estén vacíos
+                        if (nombre.isBlank() || peso.isBlank() || altura.isBlank()) {
+                            mensajeError = "Por favor, ingresa valores válidos."
+                            return@Button
+                        }
+
+                        // Validamos que peso y altura sean números
+                        if (pesoNumero == null || alturaNumero == null) {
+                            mensajeError = "Por favor, ingresa valores válidos."
+                            return@Button
+                        }
+
+                        // Validamos que peso y altura sean mayores a cero
+                        if (pesoNumero <= 0 || alturaNumero <= 0) {
+                            mensajeError = "Por favor, ingresa valores válidos."
+                            return@Button
+                        }
+
+                        // Si todo está correcto, quitamos el mensaje de error
+                        mensajeError = ""
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(14.dp),
