@@ -60,6 +60,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+
+
 // Activity principal de la app
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,8 +73,28 @@ class MainActivity : ComponentActivity() {
 
         // setContent permite mostrar la interfaz creada con Jetpack Compose
         setContent {
-            // Temporalmente mostramos el formulario para probar el Commit 3
-            // Luego volveremos a usar navegación para ir desde la carátula al formulario
+            AppIMC()
+        }
+    }
+}
+
+// Esta función controla la navegación entre pantallas
+@Composable
+fun AppIMC() {
+
+    // Controlador de navegación
+    val navController = rememberNavController()
+
+    // NavHost define la pantalla inicial y las rutas
+    NavHost(
+        navController = navController,
+        startDestination = "caratula"
+    ) {
+        composable("caratula") {
+            PantallaCaratulaElegante(navController)
+        }
+
+        composable("formulario") {
             PantallaFormulario()
         }
     }
@@ -76,7 +102,7 @@ class MainActivity : ComponentActivity() {
 
 // Esta función crea la pantalla de carátula elegante
 @Composable
-fun PantallaCaratulaElegante() {
+fun PantallaCaratulaElegante(navController: NavHostController) {
 
     // Box permite colocar un fondo y luego contenido encima
     Box(
@@ -183,7 +209,7 @@ fun PantallaCaratulaElegante() {
                 // Botón de inicio, por ahora sin navegación
                 Button(
                     onClick = {
-                        // Más adelante este botón llevará a la pantalla del formulario
+                        navController.navigate("formulario")
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(14.dp),
